@@ -265,6 +265,15 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
         return TRUE;
     else if (input->pressedRButton && UseRegisteredKeyItemOnField(2))
         return TRUE;
+	
+	#if DEBUGGING
+    if (input->input_field_1_2)
+    {
+        PlaySE(SE_WIN_OPEN);
+        Debug_ShowMainMenu();
+        return TRUE;
+    }
+        #endif
     
     if (input->tookStep && TryFindHiddenPokemon())
         return TRUE;
