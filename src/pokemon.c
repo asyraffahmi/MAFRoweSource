@@ -3786,76 +3786,76 @@ u16 GetExioliteSpecies(u16 basespecies, u8 level){
 	return basespecies;
 }
 
-#define CALC_STAT(base, iv, ev, statIndex, field)               \
-{                                                               \
-    u8 baseStat = gBaseStats[formSpeciesId].base;                     \
-    s32 n = (((2 * baseStat + iv + ev / 4) * level) / 100) + 5; \
-    u8 nature = GetNature(mon, TRUE);                                 \
-    n = ModifyStatByNature(nature, n, statIndex);               \
-    SetMonData(mon, field, &n);                                 \
+define CALC_STAT(base, iv, ev, statIndex, field)               
+{                                                               
+    u8 baseStat = gBaseStats[formSpeciesId].base;                     
+    s32 n = (((2 * baseStat + iv + ev / 4) * level) / 100) + 5; 
+    u8 nature = GetNature(mon, TRUE);                                 
+    n = ModifyStatByNature(nature, n, statIndex);               
+    SetMonData(mon, field, &n);                                 
 }
 
-#define CALC_STAT_VANILLA(base, iv, ev, statIndex, field)               \
-{                                                               \
-    u8 baseStat = gVanillaBaseStats[formSpeciesId].base;                     \
-    s32 n = (((2 * baseStat + iv + ev / 4) * level) / 100) + 5; \
-    u8 nature = GetNature(mon, TRUE);                                 \
-    n = ModifyStatByNature(nature, n, statIndex);               \
-    SetMonData(mon, field, &n);                                 \
+define CALC_STAT_VANILLA(base, iv, ev, statIndex, field)               
+{                                                               
+    u8 baseStat = gVanillaBaseStats[formSpeciesId].base;                     
+    s32 n = (((2 * baseStat + iv + ev / 4) * level) / 100) + 5; 
+    u8 nature = GetNature(mon, TRUE);                                 
+    n = ModifyStatByNature(nature, n, statIndex);               
+    SetMonData(mon, field, &n);                                 
 }
 
-//const u16 LevelCaps[NUM_SOFT_CAPS] = {16, 23, 29, 36, 43, 51, 57, 69, 77, 100};
+const u16 LevelCaps[NUM_SOFT_CAPS] = {100, 100, 100, 100, 100, 100, 100, 100, 100, 100};
 
-//void CalculateMonStats(struct Pokemon *mon)
-//{
-   //s32 oldMaxHP 		= GetMonData(mon, MON_DATA_MAX_HP, 	 		 NULL);
-    //s32 currentHP 		= GetMonData(mon, MON_DATA_HP, 		 		 NULL);
-    //s32 hpIV 			= GetMonData(mon, MON_DATA_HP_IV, 	 		 NULL);
-    //s32 hpEV 			= GetMonData(mon, MON_DATA_HP_EV, 	 		 NULL);
-    //s32 attackIV 		= GetMonData(mon, MON_DATA_ATK_IV, 	 		 NULL);
-    //s32 attackEV 		= GetMonData(mon, MON_DATA_ATK_EV, 	 		 NULL);
-    //s32 defenseIV 		= GetMonData(mon, MON_DATA_DEF_IV, 	 		 NULL);
-    //s32 defenseEV 		= GetMonData(mon, MON_DATA_DEF_EV, 	 		 NULL);
-   // s32 speedIV 		= GetMonData(mon, MON_DATA_SPEED_IV, 		 NULL);
-    //s32 speedEV 		= GetMonData(mon, MON_DATA_SPEED_EV, 		 NULL);
-   // s32 spAttackIV 		= GetMonData(mon, MON_DATA_SPATK_IV, 		 NULL);
-   // s32 spAttackEV 		= GetMonData(mon, MON_DATA_SPATK_EV, 		 NULL);
-    //s32 spDefenseIV 	= GetMonData(mon, MON_DATA_SPDEF_IV, 		 NULL);
-   // s32 spDefenseEV 	= GetMonData(mon, MON_DATA_SPDEF_EV, 		 NULL);
-    //u16 species 		= GetMonData(mon, MON_DATA_SPECIES,  		 NULL);
-    //u8 formId 			= GetMonData(mon, MON_DATA_FORM_ID,  		 NULL);
-	//u8 exioliteStatus   = GetMonData(mon, MON_DATA_EXIOLITE_ENABLED, NULL);
-	//s32 heldItem 		= GetMonData(mon, MON_DATA_HELD_ITEM);
-   // u16 formSpeciesId 	= GetFormSpeciesId(species, formId);
-	//u8 nature 			= GetNature(mon, TRUE);
-	//s32 level 			= GetLevelFromMonExp(mon);
-	//u16 evolvedform;
-    //s32 newMaxHP;
-	//s32 newAtk;
-	//s32 newDef;
-	//s32 newSpA;
-	//s32 newSpD;
-	//s32 newSpe;
-	//s32 n;
-	//bool8 specialExioliteSpecies = FALSE;
+void CalculateMonStats(struct Pokemon *mon)
+{
+   s32 oldMaxHP 		= GetMonData(mon, MON_DATA_MAX_HP, 	 		 NULL);
+    s32 currentHP 		= GetMonData(mon, MON_DATA_HP, 		 		 NULL);
+    s32 hpIV 			= GetMonData(mon, MON_DATA_HP_IV, 	 		 NULL);
+    s32 hpEV 			= GetMonData(mon, MON_DATA_HP_EV, 	 		 NULL);
+    s32 attackIV 		= GetMonData(mon, MON_DATA_ATK_IV, 	 		 NULL);
+    s32 attackEV 		= GetMonData(mon, MON_DATA_ATK_EV, 	 		 NULL);
+    s32 defenseIV 		= GetMonData(mon, MON_DATA_DEF_IV, 	 		 NULL);
+    s32 defenseEV 		= GetMonData(mon, MON_DATA_DEF_EV, 	 		 NULL);
+    s32 speedIV 		= GetMonData(mon, MON_DATA_SPEED_IV, 		 NULL);
+    s32 speedEV 		= GetMonData(mon, MON_DATA_SPEED_EV, 		 NULL);
+    s32 spAttackIV 		= GetMonData(mon, MON_DATA_SPATK_IV, 		 NULL);
+    s32 spAttackEV 		= GetMonData(mon, MON_DATA_SPATK_EV, 		 NULL);
+    s32 spDefenseIV 	= GetMonData(mon, MON_DATA_SPDEF_IV, 		 NULL);
+    s32 spDefenseEV 	= GetMonData(mon, MON_DATA_SPDEF_EV, 		 NULL);
+    u16 species 		= GetMonData(mon, MON_DATA_SPECIES,  		 NULL);
+    u8 formId 			= GetMonData(mon, MON_DATA_FORM_ID,  		 NULL);
+	u8 exioliteStatus   = GetMonData(mon, MON_DATA_EXIOLITE_ENABLED, NULL);
+	s32 heldItem 		= GetMonData(mon, MON_DATA_HELD_ITEM);
+    u16 formSpeciesId 	= GetFormSpeciesId(species, formId);
+	u8 nature 			= GetNature(mon, TRUE);
+	s32 level 			= GetLevelFromMonExp(mon);
+	u16 evolvedform;
+    s32 newMaxHP;
+	s32 newAtk;
+	s32 newDef;
+	s32 newSpA;
+	s32 newSpD;
+	s32 newSpe;
+	s32 n;
+	bool8 specialExioliteSpecies = FALSE;
 	
-	//SetMonData(mon, MON_DATA_LEVEL, &level);
+	SetMonData(mon, MON_DATA_LEVEL, &level);
 	
-	//if(FlagGet(FLAG_PERFECT_IVS_MODE)){
-		//hpIV 		= 31;
-		//attackIV 	= 31;
-		//defenseIV 	= 31;
-		//spAttackIV 	= 31;
-		//spDefenseIV = 31;
-		//speedIV 	= 31;
-	//}
+	if(FlagGet(FLAG_PERFECT_IVS_MODE)){
+		hpIV 		= 99;
+		attackIV 	= 99;
+		defenseIV 	= 99;
+		spAttackIV 	= 99;
+		spDefenseIV = 99;
+		speedIV 	= 99;
+	}
 	
-	//if(FlagGet(FLAG_LEVELESS_MODE) && !FlagGet(FLAG_NO_EVOLUTION_MODE))
-		//level = getGymLeaderMinLevel();
-	//if(FlagGet(FLAG_LEVELESS_MODE) && FlagGet(FLAG_NO_EVOLUTION_MODE))
-		//level = 5;
-	//else if(level >= sLevelCaps[GetNumBadges()] && !FlagGet(FLAG_DEFEATED_RAYQUAZA) && !FlagGet(FLAG_EASY_MODE))
-		//level = LevelCaps[GetNumBadges()];
+	if(FlagGet(FLAG_LEVELESS_MODE) && !FlagGet(FLAG_NO_EVOLUTION_MODE))
+		level = getGymLeaderMinLevel();
+	if(FlagGet(FLAG_LEVELESS_MODE) && FlagGet(FLAG_NO_EVOLUTION_MODE))
+		level = 5;
+	else if(level >= sLevelCaps[GetNumBadges()] && !FlagGet(FLAG_DEFEATED_RAYQUAZA) && !FlagGet(FLAG_EASY_MODE))
+		level = LevelCaps[GetNumBadges()];
 
     if (species == SPECIES_SHEDINJA)
     {
